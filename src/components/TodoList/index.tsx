@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Todo from '../Todo/Todo';
+import Todo from '../Todo';
 import * as Immutable from 'immutable';
 
 export interface TodoModel {

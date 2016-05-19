@@ -1,51 +1,67 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require('webpack')
+var path = require('path')
 
-module.exports={
-    entry: {
-        index: [
-            './src/index.tsx'
-        ]
-    },
-    output: {
-        path: path.join(__dirname, 'build'),
-        publicPath: "/",
-        filename: 'js/[name].js'
-    },
-    devtool: 'source-map',
-    resolve: {
-        extensions: ['', '.ts', '.tsx', '.js', '.css', '.html', 'png', 'jpg']
-    },
-    module: {
+module.exports = {
+  context: path.join(__dirname, './src'),
+  entry: {
+    tsx: './index.tsx',
+    html: './index.html',
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'immutable',
+      'redux-thunk',
+      'redux'
+    ]
+  },
+  output: {
+    path: path.join(__dirname, './build'),
+    filename: 'js/bundle.js',
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'file?name=[name].[ext]'
+      },
+      { 
+          test: /\.tsx?$/, 
+          exclude: /node_modules/,          
+          loaders: [
+            'react-hot',
+            'ts-loader'
+          ]             
+      },      
+      {
+        test: /\.css$/,
+        include: /client/,
         loaders: [
-            { 
-                test: /\.tsx?$/, 
-                loader: 'ts-loader'              
-            },
-            {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
-            }                
-        ],
-        preLoaders: [
-            { test: /\.js$/, loader: 'source-map-loader' }  
+          'style-loader',
+          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
         ]
-    },  
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    },      
-    plugins: [
+      },
+      {
+        test: /\.css$/,
+        exclude: /client/,
+        loader: 'style!css'
+      },
+    ],
+    preLoaders: [
+        { test: /\.js$/, loader: 'source-map-loader' }  
+    ]    
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.ts', '.tsx']
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.bundle.js'),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"'
+            'process.env.NODE_ENV': '"development"'
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            except: ['exports', 'require']
-        }),
-        new ExtractTextPlugin('css/[name].css')              
-    ],    
-};
+  ],
+  devServer: {
+    contentBase: './src',
+    hot: true
+  }
+}

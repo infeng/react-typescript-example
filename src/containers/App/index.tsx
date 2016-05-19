@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { addTodo, completeTodo, setVisibilityFilter } from '../../actions/todos';
-import AddTodo from '../../components/AddTodo/AddTodo';
-import {TodoList, TodoModel} from '../../components/TodoList/TodoList';
-import Footer from '../../components/Footer/Footer';
+import AddTodo from '../../components/AddTodo';
+import {TodoList, TodoModel} from '../../components/TodoList';
+import Footer from '../../components/Footer';
 import * as Immutable from 'immutable';
 import * as filters from '../../constants/filters';
+
+import './style.css';
 
 interface Props {
   visibleTodos:Immutable.List<TodoModel>;
@@ -16,7 +18,7 @@ interface Props {
 export class App extends React.Component<Props, any> {
   render() {
     return(
-      <div>
+      <div className="container">
         <AddTodo 
         onAddClick={text => {
           this.props.dispatch(addTodo(text));

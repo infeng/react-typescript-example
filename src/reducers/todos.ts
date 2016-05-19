@@ -1,7 +1,7 @@
 import * as filters from '../constants/filters';
 import {ADD_TODO, COMPLETE_TODO, SET_VISIBILITY_FILTER} from '../actions/todos';
 import * as Immutable from 'immutable';
-import { TodoModel } from '../components/TodoList/TodoList';
+import { TodoModel } from '../components/TodoList';
 
 export var visibilityFilter = (state:Immutable.Map<string, string>=(Immutable.fromJS({'filter': filters.SHOW_ALL})), action) => {
   switch(action.type) {
