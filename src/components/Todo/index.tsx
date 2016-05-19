@@ -1,15 +1,24 @@
 import * as React from 'react';
+import './style.css';
 
 interface Props {
   onClick:(e:any)=>void;
   text:string;
-  completed:boolean
+  completed:boolean;
+  isLast:boolean;
 }
 
 export default class Todo extends React.Component<Props, any> {
   render() {
+    var className:string = 'todo';
+    if(!this.props.isLast) {
+      className += ' notlast';
+    }
+    if(this.props.completed) {
+      className += ' completed';
+    }
     return (
-      <li 
+      <li className={className}
       onClick={this.props.onClick}
       style={{
         textDecoration: this.props.completed ? 'line-through': 'none',

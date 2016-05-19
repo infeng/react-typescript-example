@@ -4,6 +4,7 @@ import { addTodo, completeTodo, setVisibilityFilter } from '../../actions/todos'
 import AddTodo from '../../components/AddTodo';
 import {TodoList, TodoModel} from '../../components/TodoList';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 import * as Immutable from 'immutable';
 import * as filters from '../../constants/filters';
 
@@ -19,23 +20,26 @@ export class App extends React.Component<Props, any> {
   render() {
     return(
       <div className="container">
-        <AddTodo 
-        onAddClick={text => {
-          this.props.dispatch(addTodo(text));
-        }}
-        />
-        <TodoList
-        todos={this.props.visibleTodos}
-        onTodoClick={index => {
-          this.props.dispatch(completeTodo(index));
-        }} 
-        />
-        <Footer
-        filter={this.props.visibilityFilter}
-        onFilterChange={nextFilter=> {
-          this.props.dispatch(setVisibilityFilter(nextFilter));
-        }} 
-        />
+        <Header />
+        <div className="wrapper">
+          <AddTodo 
+          onAddClick={text => {
+            this.props.dispatch(addTodo(text));
+          }}
+          />
+          <TodoList
+          todos={this.props.visibleTodos}
+          onTodoClick={index => {
+            this.props.dispatch(completeTodo(index));
+          }} 
+          />
+          <Footer
+          filter={this.props.visibilityFilter}
+          onFilterChange={nextFilter=> {
+            this.props.dispatch(setVisibilityFilter(nextFilter));
+          }} 
+          />
+        </div>
       </div>
     );
   }

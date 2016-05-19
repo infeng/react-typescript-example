@@ -19,7 +19,11 @@ export var todos = (state:Immutable.List<TodoModel>=(Immutable.List<TodoModel>()
     case COMPLETE_TODO:
       var toCompletedTodo = state.get(action.index);
       var restTodos = state.splice(action.index, 1);
-      toCompletedTodo.completed = true;
+      if(toCompletedTodo.completed) {
+        toCompletedTodo.completed = false;
+      }else {
+        toCompletedTodo.completed = true;
+      }      
       return restTodos.toList().insert(action.index, toCompletedTodo);
     default:
       return state;

@@ -16,12 +16,15 @@ function makeSimpleActionCreator(type, ...argsNames) {
 
 export function addTodo(text:string) {
   return (dispatch, getState) => {
+    if(text === '') {
+      return;
+    }
     dispatch(makeSimpleActionCreator(ADD_TODO, 'text')(text));
   };
 }
 
 export function completeTodo(index:number) {
-  return (dispatch, getState) => {
+  return (dispatch, getState) => {    
     dispatch(makeSimpleActionCreator(COMPLETE_TODO, 'index')(index));
   };  
 }
