@@ -4,7 +4,11 @@ var path = require('path')
 module.exports = {
   context: path.join(__dirname, './src'),
   entry: {
-    tsx: './index.tsx',
+    tsx: [
+      'webpack-dev-server/client?http://0.0.0.0:3000/',
+      'webpack/hot/only-dev-server',        
+      './index.tsx'
+      ],
     html: './index.html',
     vendor: [
       'react',
@@ -16,8 +20,9 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, './build'),
+    path: path.join(__dirname, 'build'),
     filename: 'js/bundle.js',
+    publicPath: '/'
   },
   module: {
     loaders: [
@@ -30,7 +35,7 @@ module.exports = {
           exclude: /node_modules/,          
           loaders: [
             'react-hot',
-            'ts-loader'
+            'ts'
           ]             
       },      
       {
@@ -56,12 +61,9 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.bundle.js'),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"development"'
-        }),
-  ],
-  devServer: {
-    contentBase: './src',
-    hot: true
-  }
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"development"'
+    }),
+    new webpack.HotModuleReplacementPlugin()    
+  ]
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-// import './style.css';
+import './style.css';
 
 interface Props {
   onAddClick:(e:any)=>void;
