@@ -24,6 +24,7 @@ module.exports = {
     filename: 'js/bundle.js',
     publicPath: '/'
   },
+  devtool: "source-map",  
   module: {
     loaders: [
       {
@@ -40,7 +41,7 @@ module.exports = {
       },      
       {
         test: /\.css$/,
-        include: /client/,
+        include: /src/,
         loaders: [
           'style-loader',
           'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
@@ -48,7 +49,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /client/,
+        exclude: /src/,
         loader: 'style!css'
       },
     ],
